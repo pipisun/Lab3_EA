@@ -18,9 +18,12 @@ import java.util.*;
 @Table(name = "ITEM")
  public class Item implements Serializable {
 
-    private static final String COLLECTION_ID_GENERATOR = "identity";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Id 
+	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ITEM_ID")
     private Long id = null;
@@ -44,8 +47,9 @@ import java.util.*;
      private BigDecimal initialPrice;
 
      private BigDecimal reservePrice;
-
-     private Set<Category> categories = new HashSet<Category>();
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Category> categories = new HashSet<Category>();
 
     @Transient
 	private User approvedBy;
@@ -55,7 +59,7 @@ import java.util.*;
     private Date approvalDatetime;
  
     @Transient
-       private Collection<String> images = new ArrayList<String>();
+    private Collection<String> images = new ArrayList<String>();
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="CREATED", nullable = false, updatable = false)
@@ -63,12 +67,12 @@ import java.util.*;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "START_DATE", nullable = false, updatable = false)
-    private Date startDate;
+    private Date startDate = new Date();;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "END_DATE", nullable = false, updatable = false)
     @org.hibernate.annotations.Index(name = "IDX_END_DATE")
-    private Date endDate;
+    private Date endDate = new Date();;
 
 
     /**
@@ -118,7 +122,11 @@ import java.util.*;
     public Collection<String> getImages() { return images; }
 
     public Date getCreated() { return created; }
-
+    
+    public void addCategory(Category category) {
+    	this.categories.add(category);
+    }
+    
     // ********************** Common Methods ********************** //
 
     public boolean equals(Object o) {

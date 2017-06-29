@@ -4,13 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "USERS")
@@ -24,7 +18,7 @@ import javax.persistence.Version;
     private int version = 0;
 
     
-     @Column(name = "FIRSTNAME", nullable = false)
+    @Column(name = "FIRSTNAME", nullable = false)
     private String firstName;
 
     @Column(name = "LASTNAME", nullable = false)
@@ -38,9 +32,11 @@ import javax.persistence.Version;
 
     @Column(name = "IS_ADMIN", nullable = false)
     private Boolean admin = false;
-
+    
+    @OneToOne(mappedBy = "user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private UserCredentials userCredentials;
-
+	
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Address> addresses = new HashSet<Address>();
 
 	public Long getId() {
@@ -125,6 +121,10 @@ import javax.persistence.Version;
 
 	public void setRanking(Integer ranking) {
 		this.ranking = ranking;
+	}
+	
+	public void addAddress(Address address) {
+		this.addresses.add(address);
 	}
 
 }

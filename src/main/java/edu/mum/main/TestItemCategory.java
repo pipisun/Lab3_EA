@@ -45,7 +45,7 @@ public class TestItemCategory {
 		 	    	.withCategory(category2)
 		 	    	.build();     	      
 
- 	    itemService.save(item);
+		 itemService.save(item);
 	    
 	// Second item
 	    

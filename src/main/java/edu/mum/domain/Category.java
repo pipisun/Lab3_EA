@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
- @Entity
+@Entity
 @Table(name = "CATEGORY")
 public class Category implements Serializable {
 
@@ -19,7 +19,11 @@ public class Category implements Serializable {
 
     @Column(name = "CATEGORY_NAME", length = 255, nullable = false)
     private String name;
-
+    
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(name = "Category_Item",
+//    joinColumns = {@JoinColumn(name = "ITEM_ID")},
+//    inverseJoinColumns = {@JoinColumn(name = "CATEGORY_ID")})
     private List<Item> items = new ArrayList<Item>();
 
     

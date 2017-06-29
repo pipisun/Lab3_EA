@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
  
 @Entity(name = "Credentials")
@@ -25,9 +26,9 @@ public class UserCredentials {
 	 @Column( nullable = false, length = 32)
 	String verifyPassword;
 	Boolean enabled;
-
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   	private User user;
-
+  	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
  	List<Authority> authority = new ArrayList<Authority>();
 
  	public String getUserName() {
@@ -66,5 +67,7 @@ public class UserCredentials {
 	public void setAuthority(List<Authority> authority) {
 		this.authority = authority;
 	}
- 	
+ 	public void addUser(User user) {
+ 		this.setUser(user);
+ 	}
 }

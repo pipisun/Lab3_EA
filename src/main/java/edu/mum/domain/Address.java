@@ -24,7 +24,7 @@ public class Address implements Serializable {
 
     @Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
-     private Long id = null;
+    private Long id = null;
 
 	@Column(length = 255, nullable = true)
 	private String street="";
